@@ -1,3 +1,5 @@
+@import '~antd/dist/antd.css';
+
 .App {
   text-align: center;
 }
@@ -35,4 +37,36 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+div.ant-progress-circle,
+div.ant-progress-line {
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+[class*='-col-rtl'] div.ant-progress-circle,
+[class*='-col-rtl'] div.ant-progress-line {
+  margin-right: 0;
+  margin-left: 8px;
+}
+.space-align-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+.space-align-block {
+  flex: none;
+  margin: 8px 4px;
+  padding: 8px;
+  border: 3px solid grey;
+  border-radius: 12px;
+  background: white;
+}
+.space-align-block .mock-block {
+  display: inline-block;
+  padding: 32px 8px 16px;
+  background: rgba(150, 150, 150, 0.2);
+  color: black;
+  text-align: left;
 }
