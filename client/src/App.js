@@ -1,18 +1,28 @@
 import './App.css';
-import GoogleLogin from 'react-google-login';
-import React from 'react';
+import GoogleLogin, { GoogleLogout } from 'react-google-login';
+import React, {useState, useMemo} from 'react';
 import FoodProgress from './components/Food/foodProgress';
-
+import { AuthContext } from './authContext';
 
 function App() {
+
+  const [user, setUser] = useState(null);
+
+  const value = useMemo(() => ({user, setUser}), [user, setUser]);
+
   return (
     <div className="App">
       <header className="App-header">
-        <GoogleLogin
+        {user ? (
+          <GoogleLogout/>
+        ):(
+          <GoogleLogin
           clientId="979224664250-cv9l23uv6pbu88iq6gomg2o154702cbv.apps.googleusercontent.com"
           buttonText="Login"
           cookiePolicy={'single_host_origin'}
+          onSuccess={() => setUser("john")}
         />
+        )}
         <FoodProgress
           name={"Kimchi"}
           buyDate={"10/2/21"}
