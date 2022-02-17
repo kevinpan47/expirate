@@ -1,21 +1,20 @@
-var express = require('express');
-var app = express();
+const fastify = require('fastify')({
+    logger: true
+})
 
-app.use(express.static(path.resolve(__dirname, '../front-end/build')));
+const addFood = require(`${__dirname}/api/addFood`);
 
-// This responds with "Hello World" on the homepage
-app.get('/', function (req, res) {
-   console.log("Got a GET request for the homepage");
-   res.send('Hello GET');
-});
+fastify.get('/', function (request, reply) {
+    reply.send({ hello: 'world' })
+})
 
-const getUserEndpoint = require ('./getUser');
-app.use('/getUser', getUserEndpoint);
+fastify.post('/add', addFood.addFood);
 
-
-var server = app.listen(8081, function () {
-   var host = server.address().address
-   var port = server.address().port
-   
-   console.log("Example app listening at http://%s:%s", host, port)
+// Run the server!
+fastify.listen(3000, function (err, address) {
+if (err) {
+    fastify.log.error(err)
+    process.exit(1)
+}
+// Server is now listening on ${address}
 })
