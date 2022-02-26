@@ -1,10 +1,12 @@
+const db = require('../db/config');
+
 const bodySchema = {
     type: 'object',
-    required: ['userID'],
+    required: ['userID', 'foodName', 'expires'],
     properties: {
         userID: {type: 'string'},
         foodName: {type: 'string'},
-        expires: {type: 'string'},
+        expires: {type: 'number'},
         notes: {type: 'string'}
     }
 }
@@ -16,9 +18,18 @@ exports.schema = {
 exports.addFood = (req, res) => {
     const item = req.body;
 
-    let userID = req.body.userID ? req.body.userID : ""
-    console.log(req.body.userID)
-
+    console.log(item);
+    if (req.body.notes == null) {item.notes == ""}
+    
+    db.run(`INSERT INTO food(userid, food_name, expires, notes) VALUES(?, ?, ?, ?)`, [item.userID, item.foodName, item.expires, item.notes], (err) => {
+        if (err) {
+            console.log(err);
+            res.code(500).send("Database error");
+        } else {
+            console.log("Inserted into food table")
+            res.code(201).send("Added Item");
+        }
+    })
 };
 
 
